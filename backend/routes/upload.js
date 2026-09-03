@@ -8,7 +8,15 @@ router.post('/single', authenticateToken, upload.single('image'), (req, res) => 
   if (!req.file) {
     return res.status(400).json({ error: 'No image file uploaded or invalid file format.' });
   }
-  const fileUrl = `/uploads/${req.file.filename}`;
+
+  let fileUrl;
+  if (req.file.buffer) {
+    const mime = req.file.mimetype || 'image/jpeg';
+    fileUrl = `data:${mime};base64,${req.file.buffer.toString('base64')}`;
+  } else {
+    fileUrl = `/uploads/${req.file.filename}`;
+  }
+
   res.json({ message: 'Image uploaded successfully', url: fileUrl });
 });
 
@@ -18,7 +26,14 @@ router.post('/multiple', authenticateToken, upload.array('images', 10), (req, re
     return res.status(400).json({ error: 'No image files uploaded.' });
   }
 
-  const urls = req.files.map(file => `/uploads/${file.filename}`);
+  const urls = req.files.map(file => {
+    if (file.buffer) {
+      const mime = file.mimetype || 'image/jpeg';
+      return `data:${mime};base64,${file.buffer.toString('base64')}`;
+    }
+    return `/uploads/${file.filename}`;
+  });
+
   res.json({ message: `${req.files.length} images uploaded successfully`, urls });
 });
 

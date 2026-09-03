@@ -9,7 +9,20 @@ let dbInstance = null;
 async function getDB() {
   if (dbInstance) return dbInstance;
 
-  const dbPath = path.join(__dirname, 'database.sqlite');
+  let dbPath = path.join(__dirname, 'database.sqlite');
+
+  if (process.env.VERCEL) {
+    const tmpDbPath = path.join('/tmp', 'database.sqlite');
+    try {
+      if (!fs.existsSync(tmpDbPath) && fs.existsSync(dbPath)) {
+        fs.copyFileSync(dbPath, tmpDbPath);
+      }
+    } catch (e) {
+      console.warn('Vercel tmp DB copy warning:', e.message);
+    }
+    dbPath = tmpDbPath;
+  }
+
   dbInstance = await open({
     filename: dbPath,
     driver: sqlite3.Database
