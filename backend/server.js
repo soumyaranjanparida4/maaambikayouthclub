@@ -38,7 +38,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message || 'An unexpected server error occurred.' });
 });
 
-// Initialize DB and start server
+// Initialize DB middleware for serverless
+app.use(async (req, res, next) => {
+  try {
+    await getDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Initialize DB and start server locally
 async function startServer() {
   try {
     await getDB();
@@ -55,4 +65,8 @@ async function startServer() {
   }
 }
 
-startServer();
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = app;
