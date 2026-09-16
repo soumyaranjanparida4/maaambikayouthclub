@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { getMembers } from '../services/api';
-import { Users, Search, Shield, Maximize2, X, Sparkles } from 'lucide-react';
+import { Users, Search, Shield } from 'lucide-react';
 
 export const Members = () => {
   const [members, setMembers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [isBannerFullscreen, setIsBannerFullscreen] = useState(false);
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -48,44 +47,14 @@ export const Members = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
-        {/* FULL SCREEN SHOWCASE BANNER */}
-        <section className="relative group">
-          <div className="bg-gradient-to-r from-brand-blue-950 via-slate-900 to-brand-blue-950 rounded-3xl p-2.5 sm:p-3 shadow-2xl border-2 border-amber-500/40 relative overflow-hidden">
-            
-            {/* Top Tag */}
-            <div className="flex items-center justify-between px-3 py-2 mb-2">
-              <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">
-                <Sparkles className="w-3.5 h-3.5" /> Official Committee Group Banner
-              </span>
-              <button
-                onClick={() => setIsBannerFullscreen(true)}
-                className="flex items-center gap-1 text-xs font-bold text-slate-300 hover:text-amber-400 bg-slate-800/80 hover:bg-slate-800 px-3 py-1 rounded-lg border border-slate-700 transition-colors"
-              >
-                <Maximize2 className="w-3.5 h-3.5" /> View Fullscreen
-              </button>
-            </div>
-
-            {/* Banner Image */}
-            <div
-              onClick={() => setIsBannerFullscreen(true)}
-              className="cursor-pointer overflow-hidden rounded-2xl relative aspect-[16/9] sm:aspect-[21/9] bg-slate-950 flex items-center justify-center group"
-            >
-              <img
-                src="/members-banner.jpg"
-                alt="Maa Ambika Yuvak Sangha Barapada Official Banner"
-                className="w-full h-full object-contain sm:object-cover group-hover:scale-[1.02] transition-transform duration-500"
-              />
-              
-              {/* Overlay Prompt */}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                <span className="bg-amber-500 text-slate-950 font-black text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-xl flex items-center gap-2">
-                  <Maximize2 className="w-4 h-4" /> Click to Open Full Resolution
-                </span>
-              </div>
-            </div>
-
-          </div>
-        </section>
+        {/* OFFICIAL GROUP BANNER */}
+        <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-500/30 bg-slate-900">
+          <img
+            src="/members-banner.jpg"
+            alt="Maa Ambika Yuvak Sangha Barapada Official Banner"
+            className="w-full h-auto object-cover block"
+          />
+        </div>
         
         {/* Search & Filter Bar */}
         <div className="bg-white p-4 rounded-2xl shadow-md border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -158,35 +127,6 @@ export const Members = () => {
         )}
 
       </div>
-
-      {/* FULLSCREEN LIGHTBOX MODAL */}
-      {isBannerFullscreen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
-          onClick={() => setIsBannerFullscreen(false)}
-        >
-          <button
-            onClick={() => setIsBannerFullscreen(false)}
-            className="absolute top-4 right-4 z-50 p-3 rounded-full bg-white/10 text-white hover:bg-amber-500 hover:text-slate-950 transition-colors shadow-2xl"
-            aria-label="Close"
-          >
-            <X className="w-6 h-6" />
-          </button>
-          <div
-            className="max-w-6xl max-h-[90vh] flex flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src="/members-banner.jpg"
-              alt="Maa Ambika Yuvak Sangha Barapada Official Banner"
-              className="max-h-[85vh] max-w-full object-contain rounded-2xl border border-white/20 shadow-2xl"
-            />
-            <p className="text-amber-400 text-xs sm:text-sm font-extrabold tracking-wide mt-3 text-center">
-              MAA AMBIKA YUVAK SANGHA, BARAPADA — 2025
-            </p>
-          </div>
-        </div>
-      )}
 
     </div>
   );
