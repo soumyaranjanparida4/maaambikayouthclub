@@ -55,16 +55,6 @@ export const AdminLogin = () => {
           </p>
         </div>
 
-        {/* Default credentials notification banner */}
-        <div className="bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-xl text-xs text-amber-300 space-y-2">
-          <p className="font-bold flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5" /> Portal Credentials:
-          </p>
-          <div className="text-slate-300 font-mono text-[11px] space-y-1">
-            <p>• Full Admin: <span className="text-white font-bold">admin</span> / <span className="text-white font-bold">admin123</span></p>
-            <p>• Photo Only Admin: <span className="text-white font-bold">photoadmin</span> / <span className="text-white font-bold">photo123</span></p>
-          </div>
-        </div>
 
         {/* Error Alert */}
         {error && (
