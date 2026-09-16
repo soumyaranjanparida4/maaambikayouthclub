@@ -213,58 +213,72 @@ async function seedDatabase(db) {
       {
         name: 'Shri Jyoti',
         photo_url: '/uploads/member_1.jpg',
-        role: 'Sports Coordinator',
+        role: 'Active Member',
         description: 'Organizes cricket tournaments, volleyball competitions, and annual athletics meet for Barapada youth.',
         display_order: 1
       },
       {
         name: 'Shri Biranchi',
         photo_url: '/uploads/member_2.jpg',
-        role: 'Cultural Secretary',
+        role: 'Active Member',
         description: 'Directs drama programs, festival pujas, and traditional music events during village celebrations.',
         display_order: 2
       },
       {
         name: 'Shri Prakash',
         photo_url: '/uploads/member_3.jpg',
-        role: 'Social Welfare Head',
+        role: 'Active Member',
         description: 'Leads blood donation drives, tree plantation initiatives, and emergency relief support in the region.',
         display_order: 3
       },
       {
         name: 'Shri Nirmalya',
         photo_url: '/uploads/member_4.jpg',
-        role: 'Cleanliness Drive Lead',
+        role: 'Active Member',
         description: 'Spearheads Swachh Barapada sanitation campaigns and waste management drives across all hamlets.',
         display_order: 4
       },
       {
         name: 'Kumari Lipsa Rani Rout',
         photo_url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
-        role: 'Women Empowerment Lead',
+        role: 'Active Member',
         description: 'Coordinates self-help group workshops, education drives, and health camps for women and young girls.',
         display_order: 5
       },
       {
         name: 'Shri Vicky',
         photo_url: '/uploads/member_5.jpg',
-        role: 'Youth Volunteer',
+        role: 'Active Member',
         description: 'Active coordinator in student mentorship, career counseling sessions, and exam preparation guidance.',
         display_order: 6
       },
       {
         name: 'Shri Alok Kumar Samal',
         photo_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
-        role: 'Media & Photography',
+        role: 'Active Member',
         description: 'Captures committee activities, maintains photo records, and handles digital media publications.',
         display_order: 7
       },
       {
         name: 'Shri Sanjeev Mohapatra',
         photo_url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80',
-        role: 'Executive Member',
+        role: 'Active Member',
         description: 'Dedicated active volunteer contributing to all village development projects and temple restoration efforts.',
         display_order: 8
+      },
+      {
+        name: 'swadhin',
+        photo_url: '/uploads/file-1789539471448-swadhin.jpg',
+        role: 'Active Member',
+        description: '',
+        display_order: 9
+      },
+      {
+        name: 'Biswajit',
+        photo_url: '/uploads/file-1789539529438-biswajit.png',
+        role: 'Active Member',
+        description: '',
+        display_order: 10
       }
     ];
 

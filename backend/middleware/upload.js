@@ -29,7 +29,7 @@ const diskStorage = multer.diskStorage({
   }
 });
 
-const storage = isVercel ? multer.memoryStorage() : diskStorage;
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|webp|gif/;
