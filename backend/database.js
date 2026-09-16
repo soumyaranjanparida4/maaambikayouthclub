@@ -131,6 +131,18 @@ async function seedDatabase(db) {
     console.log('Seeded default admin user (admin / admin123)');
   }
 
+  // 1b. Photo Admin User (Dedicated for photo uploads only)
+  const photoAdmin = await db.get('SELECT * FROM users WHERE username = ?', ['photoadmin']);
+  if (!photoAdmin) {
+    const photoPasswordHash = await bcrypt.hash('photo123', 10);
+    await db.run('INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)', [
+      'photoadmin',
+      photoPasswordHash,
+      'photo_admin'
+    ]);
+    console.log('Seeded photo admin user (photoadmin / photo123)');
+  }
+
   // 2. Settings
   const settings = await db.get('SELECT * FROM settings WHERE id = 1');
   if (!settings) {

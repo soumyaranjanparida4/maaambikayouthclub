@@ -14,6 +14,7 @@ import { Gallery } from './pages/Gallery';
 import { Contact } from './pages/Contact';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { MemberPhotoManager } from './pages/MemberPhotoManager';
 import { getSettings } from './services/api';
 
 // Scroll to top on navigation
@@ -73,6 +74,22 @@ export function App() {
               element={
                 <ProtectedRoute>
                   <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/members-photo"
+              element={
+                <ProtectedRoute>
+                  <MemberPhotoManager />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/photos"
+              element={
+                <ProtectedRoute>
+                  <MemberPhotoManager />
                 </ProtectedRoute>
               }
             />

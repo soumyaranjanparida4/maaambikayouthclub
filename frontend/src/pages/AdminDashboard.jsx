@@ -16,7 +16,7 @@ import {
 import {
   LayoutDashboard, Users, UserCheck, Trophy, Image as ImageIcon, Settings,
   MessageSquare, LogOut, Plus, Edit, Trash2, Upload, Save, Check, X, Shield,
-  Phone, Eye, Lock, Calendar, MapPin, AlertTriangle, ArrowUp, ArrowDown
+  Phone, Eye, Lock, Calendar, MapPin, AlertTriangle, ArrowUp, ArrowDown, Camera
 } from 'lucide-react';
 
 export const AdminDashboard = () => {
@@ -434,10 +434,10 @@ export const AdminDashboard = () => {
                   <Plus className="w-4 h-4" /> Create Activity
                 </button>
                 <button
-                  onClick={() => { setActiveTab('gallery'); setGalleryModal({ open: true, data: { caption: '', category: 'Events', image_url: '' } }); }}
-                  className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-2"
+                  onClick={() => navigate('/admin/members-photo')}
+                  className="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center gap-2"
                 >
-                  <Upload className="w-4 h-4" /> Upload Gallery Photo
+                  <Camera className="w-4 h-4" /> Member Photo Portal
                 </button>
               </div>
             </div>
