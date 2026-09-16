@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
+const { createClient } = require('@libsql/client');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require('fs');
@@ -9,27 +10,70 @@ let dbInstance = null;
 async function getDB() {
   if (dbInstance) return dbInstance;
 
-  let dbPath = path.join(__dirname, 'database.sqlite');
+  // 1. If Turso Cloud Database URL is provided, connect to Turso
+  if (process.env.TURSO_DATABASE_URL) {
+    console.log('Connecting to Turso Cloud SQLite Database...');
+    const client = createClient({
+      url: process.env.TURSO_DATABASE_URL,
+      authToken: process.env.TURSO_AUTH_TOKEN
+    });
 
-  if (process.env.VERCEL) {
-    const tmpDbPath = path.join('/tmp', 'database.sqlite');
-    try {
-      if (!fs.existsSync(tmpDbPath) && fs.existsSync(dbPath)) {
-        fs.copyFileSync(dbPath, tmpDbPath);
+    dbInstance = {
+      isTurso: true,
+      rawClient: client,
+
+      async get(sql, params = []) {
+        const res = await client.execute({ sql, args: params || [] });
+        return (res.rows && res.rows.length > 0) ? res.rows[0] : null;
+      },
+
+      async all(sql, params = []) {
+        const res = await client.execute({ sql, args: params || [] });
+        return res.rows || [];
+      },
+
+      async run(sql, params = []) {
+        const res = await client.execute({ sql, args: params || [] });
+        return {
+          lastID: res.lastInsertRowid !== undefined && res.lastInsertRowid !== null ? Number(res.lastInsertRowid) : 0,
+          changes: res.rowsAffected || 0
+        };
+      },
+
+      async exec(sql) {
+        if (client.executeMultiple) {
+          return await client.executeMultiple(sql);
+        }
+        const statements = sql.split(';').map(s => s.trim()).filter(s => s.length > 0);
+        for (const stmt of statements) {
+          await client.execute(stmt);
+        }
       }
-    } catch (e) {
-      console.warn('Vercel tmp DB copy warning:', e.message);
+    };
+  } else {
+    // 2. Local SQLite fallback
+    let dbPath = path.join(__dirname, 'database.sqlite');
+
+    if (process.env.VERCEL) {
+      const tmpDbPath = path.join('/tmp', 'database.sqlite');
+      try {
+        if (!fs.existsSync(tmpDbPath) && fs.existsSync(dbPath)) {
+          fs.copyFileSync(dbPath, tmpDbPath);
+        }
+      } catch (e) {
+        console.warn('Vercel tmp DB copy warning:', e.message);
+      }
+      dbPath = tmpDbPath;
     }
-    dbPath = tmpDbPath;
+
+    dbInstance = await open({
+      filename: dbPath,
+      driver: sqlite3.Database
+    });
+
+    // Enable foreign keys
+    await dbInstance.run('PRAGMA foreign_keys = ON');
   }
-
-  dbInstance = await open({
-    filename: dbPath,
-    driver: sqlite3.Database
-  });
-
-  // Enable foreign keys
-  await dbInstance.run('PRAGMA foreign_keys = ON');
 
   // Create tables
   await dbInstance.exec(`
