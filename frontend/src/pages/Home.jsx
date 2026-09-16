@@ -46,61 +46,81 @@ export const Home = ({ settings }) => {
     <div className="min-h-screen bg-slate-50">
       
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-brand-blue-950">
+      <section className="hero-section pt-20 pb-12 sm:pt-24 sm:pb-16 bg-brand-blue-950">
         
-        {/* Background Image with Dark Gradient Overlay */}
+        {/* Fallback Background Image behind video */}
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-30 transform scale-105 transition-transform duration-1000"
+          className="absolute inset-0 bg-cover bg-center opacity-30 z-0 pointer-events-none"
           style={{ backgroundImage: `url(${heroImage})` }}
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-950 via-brand-blue-950/80 to-brand-blue-900/60"></div>
+
+        {/* Hero Background Video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={heroImage}
+          className="hero-background-video"
+          ref={(video) => {
+            if (video) {
+              video.muted = true;
+              video.play().catch(() => {});
+            }
+          }}
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
+
+        {/* Dark Cinematic Semi-Transparent Overlay (Calibrated for visible video + clear text) */}
+        <div className="hero-video-overlay bg-gradient-to-b from-[#05162d]/50 via-[#05162d]/50 to-[#05162d]/75"></div>
 
         {/* Hero Decorative Glow Elements */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-amber-500/15 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-amber-500/10 blur-[120px] rounded-full pointer-events-none z-10"></div>
 
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+        <div className="hero-content max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-400/40 backdrop-blur-md mb-6 animate-fade-in">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span className="text-xs sm:text-sm font-bold tracking-widest uppercase text-amber-300">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-amber-500/10 border border-amber-400/40 backdrop-blur-md mb-6 animate-fade-in">
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 flex-shrink-0" />
+            <span className="text-[11px] sm:text-xs md:text-sm font-bold tracking-widest uppercase text-amber-300">
               Official Village Youth Committee • Barapada
             </span>
           </div>
 
           {/* Main Title */}
-          <h1 className="font-display font-black text-white text-3xl sm:text-5xl md:text-6xl leading-tight tracking-tight uppercase mb-4 drop-shadow-md">
-            MAA AMBIKA YOUTH CLUB <span className="text-amber-400 block sm:inline">BARAPADA</span>
+          <h1 className="font-display font-black text-white text-3xl sm:text-5xl md:text-6xl leading-[1.15] tracking-tight uppercase mb-4 drop-shadow-md">
+            MAA &nbsp; AMBIKA  &nbsp;YOUTH CLUB <span className="text-amber-400 block sm:inline">BARAPADA</span>
           </h1>
 
           {/* Motto & Tagline */}
-          <p className="font-display text-lg sm:text-2xl font-bold text-amber-300 mb-2 italic">
+          <p className="font-display text-base sm:text-xl md:text-2xl font-bold text-amber-300 mb-2 italic">
             “Together for Our Village, Together for Our Future”
           </p>
 
-          <p className="text-sm sm:text-base font-semibold text-slate-300 tracking-wider uppercase mb-8">
+          <p className="text-xs sm:text-sm md:text-base font-semibold text-slate-300 tracking-wider uppercase mb-8">
             {tagline}
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6">
             <Link
               to="/leadership"
-              className="px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base bg-amber-500 hover:bg-amber-400 text-brand-blue-950 shadow-xl shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2"
+              className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold text-sm sm:text-base bg-amber-500 hover:bg-amber-400 text-brand-blue-950 shadow-xl shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
-              <Users className="w-5 h-5" /> Meet Our Leaders
+              <Users className="w-5 h-5 flex-shrink-0" /> Meet Our Leaders
             </Link>
             <Link
               to="/members"
-              className="px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2"
+              className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold text-sm sm:text-base bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
               View Members
             </Link>
             <Link
               to="/activities"
-              className="px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2"
+              className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold text-sm sm:text-base bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
-              <Trophy className="w-5 h-5" /> Our Activities
+              <Trophy className="w-5 h-5 flex-shrink-0" /> Our Activities
             </Link>
           </div>
 
@@ -108,7 +128,7 @@ export const Home = ({ settings }) => {
       </section>
 
       {/* 2. SHORT INTRODUCTION & STATS */}
-      <section className="relative -mt-10 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Intro Card */}
         <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-card border border-slate-100 text-center mb-12">
@@ -180,13 +200,14 @@ export const Home = ({ settings }) => {
                   )}
 
                   {/* Profile Photo */}
-                  <div className="h-56 overflow-hidden bg-slate-200 relative">
+                  <div className="relative w-full aspect-[4/5] overflow-hidden bg-slate-200">
                     <img
                       src={leader.photo_url || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'}
                       alt={leader.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
                     <div className="absolute bottom-3 left-4 right-4">
                       <span className="text-xs font-black uppercase tracking-wider text-amber-300">
                         {leader.position}

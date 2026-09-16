@@ -80,15 +80,16 @@ export const Members = () => {
               >
                 <div>
                   {/* Photo Header */}
-                  <div className="h-56 bg-slate-100 relative overflow-hidden">
+                  <div className="relative w-full aspect-[4/5] bg-slate-100 overflow-hidden">
                     <img
                       src={member.photo_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}
                       alt={member.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                    <div className="absolute bottom-3 left-3">
-                      <span className="bg-brand-blue-950 text-amber-400 font-bold text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-md shadow border border-amber-500/30">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <span className="bg-brand-blue-950/90 backdrop-blur-sm text-amber-400 font-bold text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-md shadow border border-amber-500/30 inline-block">
                         {member.role || 'Active Member'}
                       </span>
                     </div>

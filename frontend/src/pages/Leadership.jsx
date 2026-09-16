@@ -59,7 +59,7 @@ export const Leadership = () => {
                     <img
                       src={president.photo_url || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'}
                       alt={president.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-top"
                     />
                   </div>
                   <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-amber-500 text-brand-blue-950 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg border border-white flex items-center gap-1.5">
@@ -113,13 +113,14 @@ export const Leadership = () => {
               >
                 <div>
                   {/* Photo Header */}
-                  <div className="h-64 bg-slate-200 relative overflow-hidden">
+                  <div className="relative w-full aspect-[4/5] bg-slate-200 overflow-hidden">
                     <img
                       src={leader.photo_url || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80'}
                       alt={leader.name}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-950/80 via-transparent to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-950/80 via-transparent to-transparent pointer-events-none"></div>
                     <div className="absolute bottom-3 left-4">
                       <span className="bg-amber-500 text-brand-blue-950 font-black text-xs uppercase tracking-wider px-3 py-1 rounded-md shadow">
                         {leader.position}
